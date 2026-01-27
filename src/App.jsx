@@ -402,11 +402,7 @@ export default function App() {
                       placeholder="Android ID"
                       value={imei}
                       maxLength={15}
-                      onChange={(e) => {
-                        // tetap string, tanpa numeric mode
-                        const val = e.target.value.replace(/\D/g, "");
-                        setImei(val);
-                      }}
+                      onChange={(e) => e.target.value}
                     />
                     <label>Android ID (15 Digit)</label>
                   </div>
