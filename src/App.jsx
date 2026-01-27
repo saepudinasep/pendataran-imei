@@ -206,10 +206,9 @@ export default function App() {
                     className="form-control"
                     placeholder="IMEI"
                     value={imei}
-                    inputMode="numeric"
                     maxLength={15}
                     onChange={(e) => {
-                      // hanya angka & tetap string
+                      // tetap string, tanpa numeric mode
                       const val = e.target.value.replace(/\D/g, "");
                       setImei(val);
                     }}
