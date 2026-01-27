@@ -217,15 +217,15 @@ export default function App() {
                 </div>
 
                 <div className="text-center mt-2">
+                  <small className="text-muted d-block mt-1">
+                    Contoh letak Android ID pada perangkat
+                  </small>
                   <img
                     src="/imei-example.png"
                     alt="Contoh Letak Android ID"
                     className="img-fluid rounded border"
                     style={{ maxHeight: "500px" }}
                   />
-                  <small className="text-muted d-block mt-1">
-                    Contoh letak Android ID pada perangkat
-                  </small>
                 </div>
 
                 <button className="btn btn-primary btn-lg w-100 rounded-3" type="submit">
