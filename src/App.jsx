@@ -402,7 +402,7 @@ export default function App() {
                       placeholder="Android ID"
                       value={imei}
                       maxLength={15}
-                      onChange={(e) => e.target.value}
+                      onChange={(e) => setImei(e.target.value)}
                     />
                     <label>Android ID (15 Digit)</label>
                   </div>
