@@ -62,7 +62,7 @@ export default function App() {
     if (!tipeHP.trim()) return "Tipe HP wajib diisi";
 
     if (!imei) return "Android ID wajib diisi";
-    if (imei.length !== 15) return "Android ID harus 15 digit";
+    if (imei.length !== 16) return "Android ID harus 16 digit";
 
     return null; // ✅ valid
   };
@@ -384,10 +384,10 @@ export default function App() {
                       className="form-control"
                       placeholder="Android ID"
                       value={imei}
-                      maxLength={15}
+                      maxLength={16}
                       onChange={(e) => setImei(e.target.value)}
                     />
-                    <label>Android ID (15 Digit)</label>
+                    <label>Android ID (16 Digit)</label>
                   </div>
 
                   <div className="text-center mt-2">
