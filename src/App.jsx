@@ -11,9 +11,9 @@ export default function App() {
   const [merkHP, setMerkHP] = useState("");
   const [merkHPManual, setMerkHPManual] = useState("");
   const [versiAndroid, setVersiAndroid] = useState("");
-  const [versiAndroidManual, setVersiAndroidManual] = useState("");
   const [imei, setImei] = useState("");
   const [tipeHP, setTipeHP] = useState("");
+  const [file, setFile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const regions = useMemo(
@@ -56,15 +56,51 @@ export default function App() {
       return "Merk HP manual wajib diisi";
 
     if (!versiAndroid) return "Versi Android wajib dipilih";
-    if (versiAndroid === "OTHERS" && !versiAndroidManual.trim())
-      return "Versi Android manual wajib diisi";
 
     if (!tipeHP.trim()) return "Tipe HP wajib diisi";
 
     if (!imei) return "Android ID wajib diisi";
     if (imei.length !== 16) return "Android ID harus 16 digit";
 
+    if (!file) return "Foto Device ID MSS APK wajib diupload";
+
     return null; // ✅ valid
+  };
+
+  // 📌 Fungsi compress image menggunakan Canvas
+  const compressImage = (file, quality = 0.6, maxWidth = 1500) => {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+
+      reader.onload = (event) => {
+        const img = new Image();
+        img.src = event.target.result;
+
+        img.onload = () => {
+          const canvas = document.createElement("canvas");
+          const ctx = canvas.getContext("2d");
+
+          let width = img.width;
+          let height = img.height;
+
+          // Resize jika terlalu besar
+          if (width > maxWidth) {
+            height = (maxWidth / width) * height;
+            width = maxWidth;
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          ctx.drawImage(img, 0, 0, width, height);
+
+          // Convert ke kualitas lebih rendah
+          const compressedBase64 = canvas.toDataURL("image/jpeg", quality);
+
+          resolve(compressedBase64);
+        };
+      };
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -78,18 +114,25 @@ export default function App() {
 
     setIsLoading(true);
 
+    let fileBase64 = "";
+    if (file) {
+      fileBase64 = await compressImage(file, 0.7, 900);
+    }
+
     const payload = {
       region,
       cabang: cabang === "OTHERS" ? cabangManual : cabang,
       employee: employee === "OTHERS" ? employeeManual : employee,
       merkHP: merkHP === "OTHERS" ? merkHPManual : merkHP,
-      versiAndroid: versiAndroid === "OTHERS" ? versiAndroidManual : versiAndroid,
+      versiAndroid,
       tipeHP,
       imei,
+      fotoDevice: fileBase64,
+      filename: file?.name || "",
     };
 
     try {
-      const res = await fetch("https://script.google.com/macros/s/AKfycbwXNGFQFpmGRY1OpM-TNmyCAMpJGgSJhkFsBh3Zp2jmz3JmhY-23wHWSYjkud4N7Ojzow/exec", {
+      const res = await fetch("https://script.google.com/macros/s/AKfycbyrrweNw5tbR9lqGlAEFof3PO0kpahAUWWtKs7nWSAJT_1w_0LJUAHEBZ85DE27XHG71g/exec", {
         method: "POST",
         body: JSON.stringify({
           action: "inputDatabase",
@@ -111,9 +154,9 @@ export default function App() {
         setMerkHP("");
         setMerkHPManual("");
         setVersiAndroid("");
-        setVersiAndroidManual("");
         setTipeHP("");
         setImei("");
+        setFile(null);
       } else {
         swal("Gagal menyimpan", result.message, "error");
       }
@@ -269,7 +312,6 @@ export default function App() {
                         setMerkHP(e.target.value);
                         setMerkHPManual("");
                         setVersiAndroid("");
-                        setVersiAndroidManual("");
                       }}
                     >
                       <option value="">Pilih</option>
@@ -328,7 +370,6 @@ export default function App() {
                       value={versiAndroid}
                       onChange={(e) => {
                         setVersiAndroid(e.target.value);
-                        setVersiAndroidManual("");
                       }}
                     >
                       <option value="">Pilih</option>
@@ -342,23 +383,9 @@ export default function App() {
                       <option value="Android 14">Android 14</option>
                       <option value="Android 15">Android 15</option>
                       <option value="Android 16">Android 16</option>
-                      <option value="OTHERS">Lainnya</option>
                     </select>
                     <label>Versi Android</label>
                   </div>
-
-                  {versiAndroid === "OTHERS" && (
-                    <div className="form-floating mb-3">
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Merk HP"
-                        value={versiAndroidManual}
-                        onChange={(e) => setVersiAndroidManual(e.target.value)}
-                      />
-                      <label>Merk HP (Manual)</label>
-                    </div>
-                  )}
 
                   <hr className="my-4" />
 
@@ -388,6 +415,19 @@ export default function App() {
                       onChange={(e) => setImei(e.target.value)}
                     />
                     <label>Android ID (16 Digit)</label>
+                  </div>
+
+                  <hr className="my-4" />
+
+                  {/* Foto Device ID MSS APK */}
+                  <div className="form-floating mb-4">
+                    <input
+                      type="file"
+                      className="form-control"
+                      accept="image/*"
+                      onChange={(e) => setFile(e.target.files[0])}
+                    />
+                    <label>Foto Device ID MSS APK</label>
                   </div>
 
                   <div className="text-center mt-2">
