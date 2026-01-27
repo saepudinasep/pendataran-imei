@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import employeeData from "./assets/data_karyawan.json";
-import Swal from "sweetalert";
+import swal from "sweetalert";
 
 export default function App() {
   const [region, setRegion] = useState("");
@@ -72,12 +72,7 @@ export default function App() {
 
     const error = validateForm();
     if (error) {
-      Swal.fire({
-        icon: "warning",
-        title: "Data belum lengkap",
-        text: error,
-        confirmButtonText: "OK",
-      });
+      swal("Data belum lengkap", error, "warning");
       return;
     }
 
@@ -105,11 +100,7 @@ export default function App() {
       const result = await res.json();
 
       if (result.success) {
-        Swal.fire({
-          icon: "error",
-          title: "Gagal menyimpan",
-          text: result.message,
-        });
+        swal("Berhasil", "Data berhasil disimpan", "success");
 
         // reset
         setRegion("");
@@ -124,18 +115,10 @@ export default function App() {
         setTipeHP("");
         setImei("");
       } else {
-        Swal.fire({
-          icon: "error",
-          title: "Gagal menyimpan",
-          text: result.message,
-        });
+        swal("Gagal menyimpan", result.message, "error");
       }
     } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "Koneksi gagal",
-        text: "Tidak dapat terhubung ke server",
-      });
+      swal("Koneksi gagal", "Tidak dapat terhubung ke server", "error");
       console.error(error);
     } finally {
       setIsLoading(false);
