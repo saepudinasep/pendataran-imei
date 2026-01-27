@@ -90,7 +90,7 @@ export default function App() {
             <div className="card-body p-4">
 
               <h4 className="text-center fw-semibold mb-1">
-                Pendaftaran IMEI
+                Pendaftaran Android ID
               </h4>
               <p className="text-center text-muted small mb-4">
                 Lengkapi data berikut dengan benar
@@ -204,7 +204,7 @@ export default function App() {
                   <input
                     type="text"
                     className="form-control"
-                    placeholder="IMEI"
+                    placeholder="Android ID"
                     value={imei}
                     maxLength={15}
                     onChange={(e) => {
@@ -213,18 +213,18 @@ export default function App() {
                       setImei(val);
                     }}
                   />
-                  <label>IMEI (15 Digit)</label>
+                  <label>Android ID (15 Digit)</label>
                 </div>
 
                 <div className="text-center mt-2">
                   <img
                     src="/imei-example.png"
-                    alt="Contoh Letak IMEI"
+                    alt="Contoh Letak Android ID"
                     className="img-fluid rounded border"
                     style={{ maxHeight: "500px" }}
                   />
                   <small className="text-muted d-block mt-1">
-                    Contoh letak IMEI pada perangkat
+                    Contoh letak Android ID pada perangkat
                   </small>
                 </div>
 
