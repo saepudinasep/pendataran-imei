@@ -247,15 +247,15 @@ export default function App() {
                   </div>
 
                   {cabang === "OTHERS" && (
-                    <div className="form-floating mb-3">
+                    <div className="mb-3">
+                      <label class="form-label fw-semibold">Nama Cabang (Manual)</label>
                       <input
                         type="text"
                         className="form-control"
-                        placeholder="Cabang manual"
+                        placeholder="Cibinong"
                         value={cabangManual}
                         onChange={(e) => setCabangManual(e.target.value)}
                       />
-                      <label>Nama Cabang (Manual)</label>
                     </div>
                   )}
 
@@ -290,15 +290,15 @@ export default function App() {
                   </div>
 
                   {employee === "OTHERS" && (
-                    <div className="form-floating mb-3">
+                    <div className="mb-3">
+                      <label class="form-label fw-semibold">NIK - Nama (Manual)</label>
                       <input
                         type="text"
                         className="form-control"
-                        placeholder="NIK - Nama"
+                        placeholder="Contoh: 00009999 - NAMA KARYAWAN"
                         value={employeeManual}
                         onChange={(e) => setEmployeeManual(e.target.value)}
                       />
-                      <label>NIK - Nama (Manual)</label>
                     </div>
                   )}
 
@@ -350,15 +350,15 @@ export default function App() {
                   </div>
 
                   {merkHP === "OTHERS" && (
-                    <div className="form-floating mb-3">
+                    <div className="mb-3">
+                      <label class="form-label fw-semibold">Merk HP (Manual)</label>
                       <input
                         type="text"
                         className="form-control"
-                        placeholder="Merk HP"
+                        placeholder="Sony Xperia"
                         value={merkHPManual}
                         onChange={(e) => setMerkHPManual(e.target.value)}
                       />
-                      <label>Merk HP (Manual)</label>
                     </div>
                   )}
 
@@ -390,31 +390,31 @@ export default function App() {
                   <hr className="my-4" />
 
                   {/* Tipe HP */}
-                  <div className="form-floating mb-4">
+                  <div className="mb-4">
+                    <label class="form-label fw-semibold">Tipe HP</label>
                     <input
                       type="text"
                       className="form-control"
-                      placeholder="tipeHP"
+                      placeholder="Galaxy A07"
                       value={tipeHP}
                       onChange={(e) => setTipeHP(e.target.value)}
                     />
-                    <label>Tipe HP</label>
                   </div>
 
 
                   <hr className="my-4" />
 
                   {/* IMEI */}
-                  <div className="form-floating mb-4">
+                  <div className="mb-4">
+                    <label class="form-label fw-semibold">Android ID (16 Digit)</label>
                     <input
                       type="text"
                       className="form-control"
-                      placeholder="Android ID"
+                      placeholder="5e84d883603c8368"
                       value={imei}
                       maxLength={16}
                       onChange={(e) => setImei(e.target.value)}
                     />
-                    <label>Android ID (16 Digit)</label>
                   </div>
 
                   <hr className="my-4" />
